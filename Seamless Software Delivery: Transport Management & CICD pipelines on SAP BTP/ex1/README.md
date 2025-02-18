@@ -12,7 +12,7 @@ In this exercise, you will set up SAP Continuous Integration and Delivery and, i
 
 3. Click on the three dots (**...**) on the **Continuous Integration & Delivery** tile and choose **Create**.
 
-   <br>![](/exercises/ex1/images/create_subscription.png)
+   <br>![](../ex1/images/create_subscription.png)
 
  > **Note:** If you don't see the **Continuous Integration & Delivery** tile when you search for it, please go back to [Exercise 0.1](../ex0/README.md#exercise-01---optional-add-the-required-entitlements) for adding the correct entitlements first and then come back.
 
@@ -24,15 +24,15 @@ In this exercise, you will set up SAP Continuous Integration and Delivery and, i
  
 2. Choose the arrow **>** next to your user entry.
 
-   <br>![](/exercises/ex1/images/click_on_user.png)
+   <br>![](../ex1/images/click_on_user.png)
 
 3. In the **Role Collections** overview of your user entry, click on **Assign Role Collection** or, if the button is not visible, click the three dots (**...**) and choose **Assign Role Collection**.
 
-   <br>![](/exercises/ex1/images/assign_role.png)
+   <br>![](../ex1/images/assign_role.png)
 
 4. Check the boxes for **CICD Service Administrator** and **CICD Service Developer**, then click **Assign Role Collection**.
 
-   <br>![](/exercises/ex1/images/assign_cicd_roles.png)
+   <br>![](../ex1/images/assign_cicd_roles.png)
 
 ### Open the Continuous Integration and Delivery Service
 
@@ -43,7 +43,7 @@ In this exercise, you will set up SAP Continuous Integration and Delivery and, i
 2. In the **Subscriptions** overview, choose **Continuous Integration & Delivery**.
 Now, the user interface of SAP Continuous Integration and Delivery opens.
 
-<br>![](/exercises/ex1/images/open_service.png)
+<br>![](../ex1/images/open_service.png)
 
 > **Note:** If you get an authorization error when trying to access the service, please log out of the service and log back in again.
 
@@ -56,41 +56,58 @@ Connect SAP Continuous Integration and Delivery with the repository in which you
 
 <br>![](images/add_repo.png)
 
-2. In the **Add Repository** pop-up, add a name for your repository.
+2. In the **Add Repository** view, add a name for your repository.
 
-3. In GitHub, copy the HTTPS clone URL of the repository you just created in [Exercise 0](../ex0#exercise-00---create-a-copy-of-this-repository) .
+3. In GitHub, copy the HTTPS clone URL of the repository you just created in [Exercise 0](../ex0#exercise-00---create-a-copy-of-this-repository).
 
 <br>![](images/clone_url.png)
 
 4. Paste it into the **Clone URL** field in the **Add Repository** pop-up in SAP Continuous Integration and Delivery. 
 
 5. Enter the **Name** for your repository and leave the rest of the fields as they are.
-6. Choose **Add**.
+6. **Remove** the Webhook Event Receiver. This is optional and can be added later as described in [Exercise 1.2](./ex1#exercise-12-optional-create-a-webhook).
+7. Choose **Add**.
  
 <br>![](images/configure_repo.png)
-
 
 ## Exercise 1.2 (Optional) Create a Webhook
 
 You can configure a webhook for your repository, which automatically triggers a build of your job when there is a change commit in the source code repository. 
-1. In the **Repositories** tab in SAP Continuous Integration and Delivery, choose your newly created repository, then choose **Webhook Data**.
-As a result, the Webhook Data pop-up opens. This pop-up provides the information you need to create a webhook in GitHub.
+1. In the **Repositories** tab in SAP Continuous Integration and Delivery, choose your newly created repository, then choose **Edit**.
 
-<br>![](images/webhook_data_button.png)
+<br>![](images/edit_repo.png)
 
-2. Copy both **Payload URL** and **Secret**, then click on the link to your GitHub repository.
+2. **Add** a new Webhook
 
-<br>![](images/webhook_payload_info.png)
+<br>![](images/add_webhook.png)
 
-3. In your project in GitHub, go to the **Settings** tab.
+3. Keep the settings and **click** the value help button to generate new webhook credential.
 
-4. From the navigation pane, choose **Webhooks**, then choose **Add webhook**.
- 
-<br>![](images/add_webhook_button.png)
+<br>![](images/add_webhook_credentials.png)
 
-5. Enter the **Payload URL**, **Content type**, and **Secret** from the **Webhook Data** pop-up in SAP Continuous Integration and Delivery. For all other settings, leave the default values.
+4. As a result, the Credentials pop-up opens. ***Add** a new credential. 
 
-6. Choose **Add webhook**.
+<br>![](images/add_credential.png)
+
+5. In the new pop **enter** any credential name & **generate** a **Secret**. Make sure you note down the credentials as it is needed to finish the webhook setup in GitHub. Confirm with **Create** and **Save** the repository settings.
+
+<br>![](images/generate_credential.png)
+
+6. On the top right corner **open** the repostory **Webhook Data**.
+
+<br>![](images/get_webhook_data.png)
+
+7. Note down the **Payload URL**, then click on the link to your GitHub repository.
+
+<br>![](images/payload_url.png)
+
+8. In your project in GitHub, go to the **Settings** tab.
+
+9. From the navigation pane, choose **Webhooks**, then choose **Add webhook**.
+
+10. Enter the **Payload URL**, **Content type**, and **Secret** from the **Webhook Data** pop-up in SAP Continuous Integration and Delivery. For all other settings, leave the default values.
+
+11. Choose **Add webhook**.
 
 <br>![](images/webhook_config.png)
 
@@ -108,7 +125,7 @@ As a result, the Webhook Data pop-up opens. This pop-up provides the information
 
 3. In the **Stages** section, choose **Job Editor** as **Configuration Mode**.
 
-4. In the **Build** section, choose **Java 8 Node 14** as **Build Tool Version**.
+4. In the **Build** section, Keep **mta** as **Build Tool** and choose **Java 21 Node 20** as **Build Tool Version**.
 
 <br>![](images/configure_a_job.png)
 
@@ -121,7 +138,6 @@ As a result, the Webhook Data pop-up opens. This pop-up provides the information
 7. The successful build looks like the following.
 
 <br>![](images/successful_build.png)
-
 
 ## Summary
 

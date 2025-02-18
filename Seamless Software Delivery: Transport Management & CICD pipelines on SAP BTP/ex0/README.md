@@ -5,11 +5,11 @@ In this exercise, you will create your own copy of this repository and optionall
 
 ## Exercise 0.0 - Create a Copy of This Repository
 
-1. On the [main page of this repository](https://github.com/SAP-samples/teched2022-XP280), choose **Fork** on the top right.
+1. On the [main page of this repository](https://github.com/SAP-samples/cap-sflight), choose **Fork** on the top right.
 
 1. Make sure that the **Owner** matches the GitHub account that you want to use for this session. All the other information can remain the same.
 
-   <br>![](/exercises/ex0/images/fork_details.png)
+   <br>![](../ex0/images/fork_details.png)
 
 1. Choose **Create Fork**. You are now brought to a copy of the repository in your GitHub account.
 
@@ -41,7 +41,7 @@ If in the **Service Marketplace** in your subaccount, you didn't see the **Conti
 
 2. In the **Entitlements** overview of your subaccount, choose **Configure Entitlements**.
 
-   <br>![](/exercises/ex1/images/configure_entitlements.png)
+   <br>![](../ex1/images/configure_entitlements.png)
 
 3. Choose **Add Service Plans**.
 
@@ -49,7 +49,7 @@ If in the **Service Marketplace** in your subaccount, you didn't see the **Conti
 
 5. In the **Service Details: Continuous Integration & Delivery** pane, check the box next to **trial (Application)** and choose **Add 1 Service Plan**.
 
-   <br>![](/exercises/ex1/images/add_service_plan.png)
+   <br>![](../ex1/images/add_service_plan.png)
 
 6. Back in the **Entitlements** overview of your subaccount, choose **Save**.
 
