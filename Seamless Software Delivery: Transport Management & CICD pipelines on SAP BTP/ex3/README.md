@@ -8,7 +8,8 @@ In this exercise, you will extend your job in SAP Continuous Integration and Del
 2. Choose **Edit**.
 3. In the **Stages** tab of your job details, switch on **Additional Unit Tests** using the toggle.
 4. In the **npm Script** text box, enter `test:odata`.
-<br>![](/exercises/ex3/images/03_01_0000.png)
+
+    ![03_01_0000](/exercises/ex3/images/03_01_0000.png)
 
 ## Exercise 3.1 - Enable the Release Stage
 
@@ -26,7 +27,8 @@ To enable the **Release** stage in your SAP Continuous Integration and Delivery 
 10. Choose **Copy JSON** to copy the entire service key.
 11. Back in SAP Continuous Integration and Delivery, paste the copied service key into the **Service Key** text box of the **Create Credentials** pop-up window.
 12. Enter a name for the service key, for example `tms-service-key`, then choose **Create**.
-<br>![](../ex3/images/03_02_0000.png)
+
+        ![03_02_0000](../ex3/images/03_02_0000.png)
 
 ## Exercise 3.2 - Run the Pipeline Manually
 
@@ -42,12 +44,12 @@ In the previous run of your pipeline, **Additional Unit Tests** are failing beca
 3. Add a new line under line 15:
     `"test:odata": "npm install --save-dev @sap/cds-dk && npx cds-typer '*' && jest",`
 
-<br>![](../ex3/images/03_03_0000.png)
+    ![03_03_0000](../ex3/images/03_03_0000.png)
 
 4. Replace `Update package.json` in the text box with a meaningful commit message, for example, `Add test script for odata`.
 5. Choose **Commit changes** to save the changes.
 
-<br>![](../ex3/images/03_04_0000.png)
+    ![03_04_0000](../ex3/images/03_04_0000.png)
 
 ## Exercise 3.4 - Verify the Success of Your Pipeline
 

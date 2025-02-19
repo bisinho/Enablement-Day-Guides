@@ -1,6 +1,7 @@
 # Exercise 2 - Set up SAP Cloud Transport Management
 
 In this exercise we will set up SAP Cloud Transport Management service so that it can be used to perform imports of transport requests created by the SAP Continuous Integration and Delivery service. This setup consists of the following steps:
+
 - Create additional subaccounts which act as targets for the imports
 - Subscribe to SAP Cloud Transport Management
 - Create a role collection and assign it to your user
@@ -32,7 +33,9 @@ In this exercise we will set up SAP Cloud Transport Management service so that i
 18. Choose a **Space Name**, for example *Test*.
 19. Make sure that your user gets the roles **Space Manager** and **Space Developer** assigned. This is the default.
 20. Choose **Create**.
-21. Go back to the **Account Explorer** view of your trial account by clicking on its name in the breadcrumbs on the top of the screen (next to the globe icon). ![Navigate to global account](images/ex2_subaccounts_010.png)
+21. Go back to the **Account Explorer** view of your trial account by clicking on its name in the breadcrumbs on the top of the screen (next to the globe icon).
+
+    ![Navigate to global account](images/ex2_subaccounts_010.png)
 
 ### Create the Production Subaccount
 
@@ -145,7 +148,6 @@ For more details, see the documentation: [Setting Up Role Collections](https://h
 For more details, see the documentation: [Creating a Service Instance and a Service Key](https://help.sap.com/docs/TRANSPORT_MANAGEMENT_SERVICE/7f7160ec0d8546c6b3eab72fb5ad6fd8/f44956035ce54684b1dbb9e4d23c37d2.html).
 
 The new service key will be used to enable the SAP Continuous Integration and Delivery service to upload content to SAP Cloud Transport Management service and to create a transport request.
-
 
 ## Exercise 2.2 - Set Up the Transport Landscape
 
