@@ -13,16 +13,13 @@ The service is designed to work with low latency, even under a heavy workload, a
 
 ## Use Case Implementation
 To implement the desired solution, complete the following steps (use the links to explore the actions in detail):
+- Integrate SAP Alert Notification service for SAP BTP with SAP Cloud ALM and activate the switch in SAP Cloud ALM for "SAP BTP: Application Crash".
+- Integrate SAP Automation Pilot with SAP Cloud ALM.
+- Configure SAP Alert Notification service for SAP BTP to start collecting the application audit events for Cloud Foundry.
+- Create an automation flow in SAP Automation Pilot to enable an automated response to the potential app crash. Execute the following steps:
+- Use content from the provided catalogs to get the latest app state and the most recent 20 events kept for your Cloud Foundry application. Consider using the commands "GetCfAppState" and "GetCfAppEvents";
+- Model a custom command to fetch the last 100 lines from the application’s log file;
+- Trigger the automation flow in SAP Automation Pilot created in the previous step.
 
-Integrate SAP Alert Notification service for SAP BTP with SAP Cloud ALM and activate the switch in SAP Cloud ALM for "SAP BTP: Application Crash".
-Integrate SAP Automation Pilot with SAP Cloud ALM.
-Configure SAP Alert Notification service for SAP BTP to start collecting the application audit events for Cloud Foundry.
-Create an automation flow in SAP Automation Pilot to enable an automated response to the potential app crash. Execute the following steps:
-Use content from the provided catalogs to get the latest app state and the most recent 20 events kept for your Cloud Foundry application. Consider using the commands "GetCfAppState" and "GetCfAppEvents";
-Model a custom command to fetch the last 100 lines from the application’s log file;
-Create a ticket in a Ticket Management System which stores the collected app insights. This will enable quick access to troubleshooting details that may explain the crash. To implement such a command for Jira, see the commands in the "Jira Catalog".
-Configure the "app crash" event in SAP Cloud ALM Health Monitoring and enable the following actions:
-Send an email notification - an email alert is sent to the DevOps team, ensuring immediate awareness of the issue.
-Trigger the automation flow in SAP Automation Pilot created in the previous step.
-Result
+### Result
 By following the steps outlined above, you have implemented a comprehensive, end-to-end solution for automated incident response in your cloud application on SAP BTP. This solution not only detects and alerts you about issues but also automatically triggers recommended actions for troubleshooting and incident management. By structuring and automating the incident response process without the need for human intervention, you ensure faster problem resolution, more efficient project delivery, and higher client satisfaction.
