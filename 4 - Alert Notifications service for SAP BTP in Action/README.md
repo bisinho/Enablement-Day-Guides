@@ -1,7 +1,9 @@
 # Exercise 4 - SAP Alert Notification service for SAP BTP in Action
 
 **IMPORTANT:**
-In this exercise it is covered a particular use case: "Alert Notification service - Create a Ticket in a Ticket System based on a custom event". However, please be informed there are also two more optional use cases related to Alert Notificaiton service:
+In this exercise it is covered a particular use case: "Alert Notification service - Immediate alert for an app crash on CloudFoundry". 
+However, please be informed there are also many more use cases related to Alert Notificaiton service - to find out more detauls, please consult the service documentation: [SAP Alert Notification Service Events]([url](https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/sap-alert-notification-service-events))
+
 - [(Optional) Exercise 6 - Alert Notification service - Send a Notification Email based on a custom event](../ex6/README.md)
 - [(Optional) Exercise 7 -  Alert Notification service - Trigger an Ops Remedtiation Command (via SAP Automation Pilot)](../ex7/README.md)
 
