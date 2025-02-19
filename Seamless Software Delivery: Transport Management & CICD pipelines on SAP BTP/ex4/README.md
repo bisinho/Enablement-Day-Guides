@@ -17,7 +17,7 @@ The import starts and runs for a few minutes.
 ## Exercise 4.1 - Check the Transport Log
 
 1. In SAP Cloud Transport Management, choose the magnifying glass icon on the right of the table to display a detailed log of the import process. ![Access cTMS log file](images/ex4_ctms_log_010.png)
-3. To close the log display, choose **Close**.
+2. To close the log display, choose **Close**.
 
 ## Exercise 4.2 - Verify Automatic Forwarding to Next Transport Node
 

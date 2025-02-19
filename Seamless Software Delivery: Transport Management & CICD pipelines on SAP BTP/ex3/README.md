@@ -7,8 +7,9 @@ In this exercise, you will extend your job in SAP Continuous Integration and Del
 1. In the **Jobs** tab in SAP Continuous Integration and Delivery, choose the job you created in [Exercise 1](../ex1#exercise-13-create-and-trigger-a-job-in-sap-continuous-integration-and-delivery).
 2. Choose **Edit**.
 3. In the **Stages** tab of your job details, switch on **Additional Unit Tests** using the toggle.
-4. In the **npm Script** text box, enter `test`.
-<br>![](../ex3/images/03_01_0000.png)
+4. In the **npm Script** text box, enter `test:odata`.
+
+    ![03_01_0000](/exercises/ex3/images/03_01_0000.png)
 
 ## Exercise 3.1 - Enable the Release Stage
 
@@ -26,7 +27,8 @@ To enable the **Release** stage in your SAP Continuous Integration and Delivery 
 10. Choose **Copy JSON** to copy the entire service key.
 11. Back in SAP Continuous Integration and Delivery, paste the copied service key into the **Service Key** text box of the **Create Credentials** pop-up window.
 12. Enter a name for the service key, for example `tms-service-key`, then choose **Create**.
-<br>![](../ex3/images/03_02_0000.png)
+
+        ![03_02_0000](../ex3/images/03_02_0000.png)
 
 ## Exercise 3.2 - Run the Pipeline Manually
 
@@ -35,18 +37,19 @@ To enable the **Release** stage in your SAP Continuous Integration and Delivery 
 
 ## Exercise 3.3 - Fix the Test and Commit Changes to GitHub
 
-In the previous run of your pipeline, **Additional Unit Tests** are failing because one of the unit tests is trying to access a file that doesn't exist. To fix this issue, provide the correct manifest file type and commit the changes to GitHub. Proceed as follows:
+In the previous run of your pipeline, **Additional Unit Tests** are failing because the npm script `test:odata` does not exist yet. To fix this issue, provide a script in package.json and commit the changes to GitHub. Proceed as follows:
 
-1. In your GitHub repository, go to the `HTML5Module/webapp/Component.js` file.
+1. In your GitHub repository, go to the `package.json` file.
 2. Choose the pencil icon to edit the file.
-3. In line 11, change `xml` to `json`.
+3. Add a new line under line 15:
+    `"test:odata": "npm install --save-dev @sap/cds-dk && npx cds-typer '*' && jest",`
 
-<br>![](../ex3/images/03_03_0000.png)
+    ![03_03_0000](../ex3/images/03_03_0000.png)
 
-4. Replace `Update Component.js` in the text box with a meaningful commit message, for example, `Replace xml with json`.
+4. Replace `Update package.json` in the text box with a meaningful commit message, for example, `Add test script for odata`.
 5. Choose **Commit changes** to save the changes.
 
-<br>![](../ex3/images/03_04_0000.png)
+    ![03_04_0000](../ex3/images/03_04_0000.png)
 
 ## Exercise 3.4 - Verify the Success of Your Pipeline
 

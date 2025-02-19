@@ -1,6 +1,7 @@
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/teched2022-XP280)](https://api.reuse.software/info/github.com/SAP-samples/teched2022-XP280)
 
-# SAP BTP - Hands-On Enblements Day - Seamless Software Delivery: Transport Management & CI/CD pipelines on SAP BTP
+# SAP BTP - Hands-On Enablement Day - Seamless Software Delivery: Transport Management & CI/CD pipelines on SAP BTP
+
 ## Description
 
 This repository contains the material for the SLB: SAP BTP  Hands-On Enablement Day (21.02.2025). This session is called Seamless Software Delivery: Transport Management & CI/CD pipelines on SAP BTP.
@@ -16,12 +17,10 @@ platform.
 
 ## Prerequisites
 
-To complete the exercices in this repository, please make sure that you meet the following prerequisites:
+To complete the exercises in this repository, please make sure that you meet the following prerequisites:
 
 * You have an [SAP Business Technology Platform (BTP) Trial Account](https://developers.sap.com/tutorials/hcp-create-trial-account.html).
 * You have an account on [GitHub](https://github.com/signup).
-
-## 
 
 - [Exercise 0 - Getting Started](./ex0#exercise-0---getting-started)
     - [Exercise 0.0 - Create a Copy of This Repository](./ex0#exercise-00---create-a-copy-of-this-repository)
@@ -29,8 +28,8 @@ To complete the exercices in this repository, please make sure that you meet the
 - [Exercise 1 - Create a Job in the SAP Continuous Integration and Delivery service](./ex1#exercise-1---create-a-job-in-the-sap-continuous-integration-and-delivery-service)
     - [Exercise 1.0 - Set Up SAP Continuous Integration and Delivery](./ex1#exercise-10---set-up-sap-continuous-integration-and-delivery)
     - [Exercise 1.1 - Add Your Repository to SAP Continuous Integration and Delivery](./ex1#exercise-11-add-your-repository-to-sap-continuous-integration-and-delivery)
-    - [Exercise 1.2 - (Optional) Create a Webhook](./ex1#exercise-12-optional-create-a-webhook)
-    - [Exercise 1.3 - Create and Trigger a Job in SAP Continuous Integration and Delivery](./ex1#exercise-13-create-and-trigger-a-job-in-sap-continuous-integration-and-delivery)
+    - [Exercise 1.2 - Create and Trigger a Job in SAP Continuous Integration and Delivery](./ex1#exercise-12-create-and-trigger-a-job-in-sap-continuous-integration-and-delivery)
+    - [Exercise 1.3 - (Optional) Create a Webhook](./ex1#exercise-13-optional-create-a-webhook)
 - [Exercise 2 - Set up SAP Cloud Transport Management](./ex2#exercise-2---set-up-sap-cloud-transport-management)
     - [Exercise 2.0 - Create Target Subaccounts for Transport](./ex2#exercise-20---create-target-subaccounts-for-transport)
     - [Exercise 2.1 - Enable SAP Cloud Transport Management for Use](./ex2#exercise-21---enable-sap-cloud-transport-management-for-use)
@@ -51,4 +50,5 @@ To complete the exercices in this repository, please make sure that you meet the
 Support for the content in this repository is available during the actual time of the online session for which this content has been designed. Otherwise, you may request support via the [Issues](../../issues) tab.
 
 ## License
+
 Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSES/Apache-2.0.txt) file.
