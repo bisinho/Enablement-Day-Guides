@@ -66,7 +66,7 @@ Fill in the needed fields with the basic info screen and click on “Next” but
 
 You will see “Parameters” section from the wizard, as some services support the provisioning of additional configuration parameters during instance creation. These parameters are passed in a valid JSON object that contains service-specific configuration parameters, provided either in-line or in a file.
 
-As per the Alert Notificaiton service documentation - Cloud Foundry Audit Events  Application Events , in order to receive Cloud Foundry application events, you need to update the relevant SAP Alert Notification service instance with parameter `enableCloudControllerAuditEvents` set to true.
+As per the Alert Notificaiton service documentation - [Cloud Foundry Audit Events](https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/audit-events) -->  [Application Events](https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/application-events) , in order to receive Cloud Foundry application events, you need to update the relevant SAP Alert Notification service instance with parameter `enableCloudControllerAuditEvents` set to true.
 
 Therefore the following parameters shall be prvoided. 
 
