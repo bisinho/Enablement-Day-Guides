@@ -137,6 +137,7 @@ A list of possible actions is to be displayed. For this use case we’ll go with
 
 
 Fill in the fields requested and provide the email to which an alert is going to be sent out. Once you are done with it, click on the “Create” button: 
+
 ![](./images/ans-22.png)
 
 You shall be redirected to the Select Actions where the action that has been just created is associated to the subscription. Please click “Save” to proceed further: 
