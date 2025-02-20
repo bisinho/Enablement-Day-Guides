@@ -80,9 +80,8 @@ Create a robust command with input and output keys to define the command contrac
 - **Input Key Names and Types**: Input key names and their type are CRUCIAL to match exactly, because automatic mapping of expressions and values from events depend on them.
 - **Exports/Imports Showcase**: This is one way you can store the content you create in external version control systems for backup purposes.
 
-<br><br>
 > [!TIP]
-> Checkpoint: [Command contract](assets/checkpoint_1-commandContract.json)
+> Checkpoint 1/4: [Command contract](assets/checkpoint_1-commandContract.json)
 <br><br>
 
 #### Create Executors
@@ -90,6 +89,7 @@ Create a robust command with input and output keys to define the command contrac
     - Make sure *Auto-map parameters* toggle is on when adding the executors;
   - Add **GetCfAppEvents** step to identify if Out-Of-Memory errors cause the issue with alias *getAppEvents*;
     - Add a conditional execution on whether any instance of our application is in CRASHED state:
+    >  
     > `$(.getAppState.output.resourceInstances | filter(.state == \"CRASHED\") | length > 0)`
     
     <br>
@@ -112,9 +112,8 @@ Create a robust command with input and output keys to define the command contrac
     - Add a conditional execution on whether the app state is STOPPED or the resizing was executed:
     > `$(.setAppResources.executed)`
 
-<br><br>
 > [!TIP]
-> Checkpoint: [Working command](assets/checkpoint_2-workingCommand.json)
+> Checkpoint 2/4: [Working command](assets/checkpoint_2-workingCommand.json)
 <br><br>
 
 ### 3.2. Inputs Page Overview
@@ -128,9 +127,8 @@ Inputs are used to store static data instead of repeatedly typing it every time 
 > [!NOTE]
 > MFA must NOT be enabled for this demo to work! Otherwise the OTP code must be appended to your password.
 
-<br><br>
 > [!TIP]
-> Checkpoint: [Input with <PLACE_HOLDERS>](assets/checkpoint_3-inputResource.json)
+> Checkpoint 3/4: [Input with <PLACE_HOLDERS>](assets/checkpoint_3-inputResource.json)
 <br><br>
 
 #### Command configuration final touches 🤌🏻
@@ -138,9 +136,8 @@ Head back to our command to configure its last part - to automatically use our n
 
 - Click on Edit for the input keys and configure the default values for the keys *user* and *password*
 
-<br><br>
 > [!TIP]
-> Checkpoint: [Working command with input key references](assets/checkpoint_4-workingCommandWithReference.json)
+> Checkpoint 4/4: [Working command with input key references](assets/checkpoint_4-workingCommandWithReference.json)
 <br><br>
 
 ---
@@ -149,7 +146,7 @@ Head back to our command to configure its last part - to automatically use our n
 The command can be triggered in many ways: manually, via schedule, but for the purposes of this demo we will use SAP Alert Notification Service events.
 
 ---
-<br><br>
+
 ### 4.1. SAP Automation Pilot Configuration
 
 ### SAP Automation Pilot Service Account Creation
@@ -162,22 +159,20 @@ The command can be triggered in many ways: manually, via schedule, but for the p
 ### Create a Trigger Endpoint:
   - Create an SAP Automation Pilot trigger endpoint for external systems to call.
     - Select the command to create a trigger url for.
+
     > [!NOTE]
     > Some of the event fields (like *subAccount*, *resourceGroup*, *resourceName* and *resourceInstance*) can be auto-mapped, [reference here](https://help.sap.com/docs/automation-pilot/automation-pilot/reacting-to-events?locale=en-US&q=notification).
     - Then copy the endpoint URL and store it for later use.
 
 ---
-<br><br>
+
 ### 4.2. SAP Alert Notification Service Configuration
 
 - **Configuration of SAP Alert Notification Service in Business Technology Platform**:
   - Reuse the "Condition" for the event crash from the previous demo.
-  <br>
   - Create an "Action" of type SAP Automation Pilot to indicate we want to trigger our command.
     - Use the service account credentials and trigger URL from before to configure it.
-  <br>
   - Reuse the "Subscription" from the previous demo to include our newly created "Action".
-  <br>
 
 ---
 <br><br>
