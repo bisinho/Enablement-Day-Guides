@@ -4,6 +4,23 @@
         "output": {},
         "executors": [
             {
+                "execute": "utils-sapcp:ObtainLock:1",
+                "input": {
+                    "lockId": "ResizeAppWhenCrash"
+                },
+                "alias": "lockExecution",
+                "description": null,
+                "progressMessage": null,
+                "initialDelay": null,
+                "pause": null,
+                "when": null,
+                "validate": null,
+                "autoRetry": null,
+                "repeat": null,
+                "errorMessages": [],
+                "dryRun": null
+            },
+            {
                 "execute": "applm-sapcp:GetCfAppState:1",
                 "input": {
                     "resourceGroup": "$(.execution.input.resourceGroup)",
@@ -14,6 +31,7 @@
                     "subAccount": "$(.execution.input.subAccount)"
                 },
                 "alias": "getAppState",
+                "description": null,
                 "progressMessage": null,
                 "initialDelay": null,
                 "pause": null,
@@ -21,20 +39,22 @@
                 "validate": null,
                 "autoRetry": null,
                 "repeat": null,
-                "errorMessages": []
+                "errorMessages": [],
+                "dryRun": null
             },
             {
                 "execute": "monitoring-sapcp:GetCfAppEvents:1",
                 "input": {
                     "resourceGroup": "$(.execution.input.resourceGroup)",
                     "password": "$(.execution.input.password)",
+                    "eventsNumber": "20",
                     "resourceName": "$(.execution.input.resourceName)",
                     "region": "$(.execution.input.region)",
                     "user": "$(.execution.input.user)",
-                    "subAccount": "$(.execution.input.subAccount)",
-                    "eventsNumber": "50"
+                    "subAccount": "$(.execution.input.subAccount)"
                 },
                 "alias": "getAppEvents",
+                "description": null,
                 "progressMessage": null,
                 "initialDelay": null,
                 "pause": null,
@@ -59,20 +79,22 @@
                 "validate": null,
                 "autoRetry": null,
                 "repeat": null,
-                "errorMessages": []
+                "errorMessages": [],
+                "dryRun": null
             },
             {
                 "execute": "applm-sapcp:SetCfAppResources:1",
                 "input": {
                     "resourceGroup": "$(.execution.input.resourceGroup)",
                     "password": "$(.execution.input.password)",
+                    "memory": "$(.getAppState.output.memory + 1024)",
                     "resourceName": "$(.execution.input.resourceName)",
                     "region": "$(.execution.input.region)",
                     "user": "$(.execution.input.user)",
-                    "subAccount": "$(.execution.input.subAccount)",
-                    "memory": "$(.getAppState.output.memory + 1024)"
+                    "subAccount": "$(.execution.input.subAccount)"
                 },
                 "alias": "setAppResources",
+                "description": null,
                 "progressMessage": null,
                 "initialDelay": null,
                 "pause": null,
@@ -97,7 +119,8 @@
                 "validate": null,
                 "autoRetry": null,
                 "repeat": null,
-                "errorMessages": []
+                "errorMessages": [],
+                "dryRun": null
             },
             {
                 "execute": "applm-sapcp:RestartCfApp:1",
@@ -111,6 +134,7 @@
                     "rollingRestart": "false"
                 },
                 "alias": "restartApp",
+                "description": null,
                 "progressMessage": null,
                 "initialDelay": null,
                 "pause": null,
@@ -135,7 +159,8 @@
                 "validate": null,
                 "autoRetry": null,
                 "repeat": null,
-                "errorMessages": []
+                "errorMessages": [],
+                "dryRun": null
             }
         ],
         "listeners": []

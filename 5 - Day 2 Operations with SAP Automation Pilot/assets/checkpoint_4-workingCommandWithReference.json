@@ -4,6 +4,23 @@
         "output": {},
         "executors": [
             {
+                "execute": "utils-sapcp:ObtainLock:1",
+                "input": {
+                    "lockId": "ResizeAppWhenCrash"
+                },
+                "alias": "lockExecution",
+                "description": null,
+                "progressMessage": null,
+                "initialDelay": null,
+                "pause": null,
+                "when": null,
+                "validate": null,
+                "autoRetry": null,
+                "repeat": null,
+                "errorMessages": [],
+                "dryRun": null
+            },
+            {
                 "execute": "applm-sapcp:GetCfAppState:1",
                 "input": {
                     "resourceGroup": "$(.execution.input.resourceGroup)",

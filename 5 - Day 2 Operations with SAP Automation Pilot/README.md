@@ -85,9 +85,10 @@ Create a robust command with input and output keys to define the command contrac
 <br><br>
 
 #### Create Executors
-  - Add **GetCfAppState** step to check the state of our application with alias *getAppState*;
+  - Add **utils-sapcp:ObtainLock:1** step to make sure the command will not be executed multiple times in parallel due to multiple events of the same type;
+  - Add **applm-sapcp:GetCfAppState:1** step to check the state of our application with alias *getAppState*;
     - Make sure *Auto-map parameters* toggle is on when adding the executors;
-  - Add **GetCfAppEvents** step to identify if Out-Of-Memory errors cause the issue with alias *getAppEvents*;
+  - Add **monitoring-sapcp:GetCfAppEvents:1** step to identify if Out-Of-Memory errors cause the issue with alias *getAppEvents*;
     - Add a conditional execution on whether any instance of our application is in CRASHED state:
     >  
     > `$(.getAppState.output.resourceInstances | filter(.state == \"CRASHED\") | length > 0)`
@@ -97,7 +98,7 @@ Create a robust command with input and output keys to define the command contrac
     <img src="images/getAppStateSampleData.png" width="500" height="400">
     
     <br>
-  - Add **SetCfAppResources** step to resize the application's memory allocation with alias *setAppResources*;
+  - Add **applm-sapcp:SetCfAppResources:1** step to resize the application's memory allocation with alias *setAppResources*;
     - Add a conditional execution on whether the previous step contains the OOM error: `Exited with status 137 (out of memory)`
     > `$(.getAppEvents.output.eventsData | toObject.resources | map(.data.exit_description))`
     - Calculate the memory to use based on the previous value from the *getAppState* step with 1MB added:
@@ -108,7 +109,7 @@ Create a robust command with input and output keys to define the command contrac
     <img src="images/getAppEventsSampleData.png" width="500" height="400">
     
     <br>
-  - Add **RestartCfApp** step to restart the application in order for the changes to take effect with alias *restartApp*;
+  - Add **applm-sapcp:RestartCfApp:1** step to restart the application in order for the changes to take effect with alias *restartApp*;
     - Add a conditional execution on whether the app state is STOPPED or the resizing was executed:
     > `$(.setAppResources.executed)`
 
