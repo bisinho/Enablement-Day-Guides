@@ -18,7 +18,7 @@ When you run this build now, the **Additional Unit Tests** would fail because th
 
     ![git_edit](../ex3/images/git_edit.png)
 
-3. Add a new line under line 15:
+3. Add a new line below line 16:
     `"test:odata": "npm install --save-dev @sap/cds-dk && npx cds-typer '*' && jest",`
 
     ![git_commit](../ex3/images/git_commit.png)
