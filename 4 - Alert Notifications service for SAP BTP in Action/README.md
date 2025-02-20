@@ -192,12 +192,6 @@ As an expected result out of this exercise you should get an instant email in yo
 Now you can consider that the instant alerting for your CAP app is in place, and you will be always notified in case of app crashes. 
 
 
-
-## Simulation and Outputs 
-
-Now it is time to simulate the use case and inspect the outputs. To do so , please follow these steps: 
-
-
 ---
 
 ## Summary
