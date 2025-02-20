@@ -15,8 +15,14 @@ When you run this build now, the **Additional Unit Tests** would fail because th
 
 1. In your GitHub repository, go to the `package.json` file.
 2. Choose the pencil icon to edit the file.
+
+    ![git_edit](../ex3/images/git_edit.png)
+
 3. Add a new line under line 15:
     `"test:odata": "npm install --save-dev @sap/cds-dk && npx cds-typer '*' && jest",`
+
+    ![git_commit](../ex3/images/git_commit.png)
+
 4. Replace `Update package.json` in the text box with a meaningful commit message, for example, `Add test script for odata`.
 5. Click **Commit changes** to save the changes.
 
