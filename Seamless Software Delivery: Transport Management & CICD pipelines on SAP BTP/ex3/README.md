@@ -28,12 +28,15 @@ To enable the **Release** stage in your SAP Continuous Integration and Delivery 
 2. Leave the drop down to `Export from` and enter the name of the node for the upload to SAP Cloud Transport Management, which in this case is `DEV`.
 3. For **Service Key**, click on the value help button. As a result, the **Select Credentials** window pops up. Then click the plus button which opens the **Create Credential** popup.
 4. In another browser window, open the SAP BTP cockpit and navigate to the subaccount in which you’ve created an instance for SAP Cloud Transport Management.
-5. From the navigation area, go to **Spaces** and select the space in which you’ve created the Cloud Transport Management instance.
-6. Navigate to **Services** → **Instances**.
-7. Choose the name of your service instance.
-8. From the navigation area, choose **Service Keys**.
-9. Next to the name of your service key, click on the three dots **...** and then choose **View**.
-10. Choose **Copy JSON** to copy the entire service key.
+5. Navigate to **Services** → **Instances and Subscriptions**.
+6. Click on the Overflow Button (**...**) of your SAP Cloud Transport Management instance.
+7. Click on **Create Service Key**
+
+    ![create_servicekey](../ex3/images/create_servicekey.png)
+
+8. Give your key a name and click on **Create**.
+9. Next to the name of your service key, click on the Overflow Button (**...**) and then on **View**.
+10. Click on **Copy JSON** to copy the entire service key.
 11. Back in SAP Continuous Integration and Delivery, paste the copied service key into the **Service Key** text box of the **Create Credentials** pop-up window.
 12. Enter a name for the service key, for example `tms-service-key`, then choose **Create**.
 
