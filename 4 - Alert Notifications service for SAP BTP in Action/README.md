@@ -70,7 +70,9 @@ As per the Alert Notificaiton service documentation - Cloud Foundry Audit Events
 
 Therefore the following parameters shall be prvoided. 
 
+```
 { "enableCloudControllerAuditEvents": true }
+```
 
 Add this parameter and click “Next” 
 ![](./images/ans-08.png)
@@ -101,6 +103,7 @@ Click on the “Subscriptions“ menu item and then “Create” button.
 ![](./images/ans-14.png)
 
 A multistep wizard named “Create Subscription” is to be displayed. Fill in the fields, as a reference check the screenshot attached underneath: 
+
 ![](./images/ans-15.png)
 
 
