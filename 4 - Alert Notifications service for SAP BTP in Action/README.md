@@ -114,7 +114,7 @@ That will open the section so that you can create your first condition in Alert 
 
 `eventType` `Contains` `app.crash`
 
-Hint: to identify unique parameters which you could use to setup the needed conditions in Alert Notification service, you can consult the various events consumed in Alert Notification service. If we take the example of a CF crashed app, you can check out the parameters available in this event: Application Crash: https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/application-crash 
+**HINT**: to identify unique parameters which you could use to setup the needed conditions in Alert Notification service, you can consult the various events consumed in Alert Notification service. If we take the example of a CF crashed app, you can check out the parameters available in this event: Application Crash: https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/application-crash 
 See some examples of the event properties below: 
 ![](./images/ans-17.png)
 
@@ -152,7 +152,7 @@ You shall be redirected to Subscriptions page in Alert Notification service wher
 
 
 ### Email Confirmation 
-Important: please check your inbox. You shall get an email in your inbox to confirm manually the email you had provided in the action `emailMe` you had created. Please read the email and click on the link provided to confirm your email otherwise you won’t receive notifications from Alert Notification service. 
+**IMPORTANT**: please check your inbox. You shall get an email in your inbox to confirm manually the email you had provided in the action `emailMe` you had created. Please read the email and click on the link provided to confirm your email otherwise you won’t receive notifications from Alert Notification service. 
 ![](./images/ans-26.png)
 
 
