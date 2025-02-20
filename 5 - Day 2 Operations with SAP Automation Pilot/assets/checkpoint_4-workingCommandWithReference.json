@@ -49,7 +49,7 @@
                     "region": "$(.execution.input.region)",
                     "user": "$(.execution.input.user)",
                     "subAccount": "$(.execution.input.subAccount)",
-                    "eventsNumber": "50"
+                    "eventsNumber": "20"
                 },
                 "alias": "getAppEvents",
                 "progressMessage": null,
