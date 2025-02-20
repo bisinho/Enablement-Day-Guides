@@ -86,6 +86,7 @@ Create a robust command with input and output keys to define the command contrac
 
 #### Create Executors
   - Add **utils-sapcp:ObtainLock:1** step to make sure the command will not be executed multiple times in parallel due to multiple events of the same type;
+    - Add a unique ID like *ResizeAppWhenCrash*;
   - Add **applm-sapcp:GetCfAppState:1** step to check the state of our application with alias *getAppState*;
     - Make sure *Auto-map parameters* toggle is on when adding the executors;
   - Add **monitoring-sapcp:GetCfAppEvents:1** step to identify if Out-Of-Memory errors cause the issue with alias *getAppEvents*;
@@ -112,6 +113,7 @@ Create a robust command with input and output keys to define the command contrac
   - Add **applm-sapcp:RestartCfApp:1** step to restart the application in order for the changes to take effect with alias *restartApp*;
     - Add a conditional execution on whether the app state is STOPPED or the resizing was executed:
     > `$(.setAppResources.executed)`
+    - Set the *rollingRestart* parameter to false, because we have a single instance of our application.
 
 > [!TIP]
 > Checkpoint 2/4: [Working command](assets/checkpoint_2-workingCommand.json)
