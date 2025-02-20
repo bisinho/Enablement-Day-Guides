@@ -179,16 +179,17 @@ At the Application Overview page, click on the “Change Instance Details”:
 
 Then change the instance details by setting up the `Memory per Instance (MB)’ to 5 , checked the consent  “I understand that changing the instance memory or instance disk of "sflight-srv" will cause the application to restart” and click “Save” to save the configuration. 
 
-The newly applied configuration would case a crash of your CAP app with an error: `exited with status 137 (out of memory), reason: CRASHED`
+The newly applied configuration would case a crash of your CAP app with an error: `exited with status 137 (out of memory), reason: CRASHED
+
 ![](./images/ans-31.png)
 
 
 As an expected result out of this exercise you should get an instant email in your email inbox with details about the event and the CAP app itself: 
+
 ![](./images/ans-32.png)
 
 
 Now you can consider that the instant alerting for your CAP app is in place, and you will be always notified in case of app crashes. 
-![image](https://github.com/user-attachments/assets/016ef658-0cff-4a54-a205-9daf7c70666b)
 
 
 
