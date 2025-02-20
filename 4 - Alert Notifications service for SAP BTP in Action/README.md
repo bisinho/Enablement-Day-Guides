@@ -157,7 +157,7 @@ You shall be redirected to Subscriptions page in Alert Notification service wher
 
 
 Once you have clicked on `this link` you will be redirected to a confirmation page in your browser. Click on `Confirm` button: 
-![](./images/ans-27.png
+![](./images/ans-27.png)
 
 Then you will see a confirmation page in your browser: 
 ![](./images/ans-28.png)
