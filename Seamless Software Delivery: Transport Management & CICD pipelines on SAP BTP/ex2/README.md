@@ -2,7 +2,7 @@
 
 In this exercise we will set up SAP Cloud Transport Management service so that it can be used to perform imports of transport requests created by the SAP Continuous Integration and Delivery service. This setup consists of the following steps:
 
-- Create additional subaccounts which act as targets for the imports
+- Create one additional subaccount which act as targets for the imports
 - Subscribe to SAP Cloud Transport Management
 - Create a role collection and assign it to your user
 - Create an instance of Cloud Transport Management service and a service key
@@ -37,51 +37,69 @@ In this exercise we will set up SAP Cloud Transport Management service so that i
 
     ![Navigate to global account](images/ex2_subaccounts_010.png)
 
-### Create the Production Subaccount
+### Redistribute Cloud Foundry Entitlements Among Your Subaccounts
 
-The steps for creating the second additional subaccount are the same as in the above section, but the subaccount needs a different name. For your convenience they've been written again in this section with the new name needed. 
-
-22. Choose **Create -> Subaccount**.
-23. Enter a **Display Name** of your choice, for example *Prod*.
-26. Enter a **Subdomain** name. Please note that this name must be unique in your region. So you might want to include some characters specific to your trial account. The input screen provides you with a proposal when you start typing in the **Display Name** field.
-27. As **Region**  choose the region of your trial account.
-28. Choose **Create**.
-29. The creation of the subaccount takes a few seconds.
-30. Click on the new tile.
-31. On the **Overview** tab click on **Enable Cloud Foundry**.
-32. Leave the **Plan** set to **trial**.
-33. You can leave the **Instance Name** as it is.
-34. The **Org Name** becomes part of the URL to be used in the destination to deploy content to this subaccount. So you might want to make it a little shorter as the proposal which is created from a combination of global account name and the subdomain name. It must be unique, though. Since the subdomain name has to be unique, too, you could use it as **Org Name** as well (remove the *global account name* part).
-35. Choose **Create**.
-36. After a few seconds the Cloud Foundry Environment is set up.
-37. Click on **Create Space**.
-38. Choose a **Space Name**, for example *Prod*.
-39. Make sure that your user gets the roles **Space Manager** and **Space Developer** assigned. This is the default.
-40. Choose **Create**.
-
-You now have (at least) three subaccounts in your trial account.
-
-### Optional: Redistribute Cloud Foundry Entitlements Among Your Subaccounts
-
-Our demo application needs a Cloud Foundry memory entitlement to run. This is necessary for all subaccounts to which it will be deployed. In the trial environment the initial subaccount receives all four available entitlements by default. To deploy the application also to the test and production environment, which is an optional part in exercise 4, you have to redistribute the Cloud Foundry memory entitlement among the three subaccounts.
+To run our demo application within the Cloud Foundry runtime, it is needed to assign additional entitlements. This is necessary for all subaccounts to which the [app](https://github.com/SAP-samples/cap-sflight) will be deployed. In the trial environment the initial subaccount (called *trial*) receives all available entitlements by default. As a first step, the Cloud Foundry Runtime Memomry needs to reassgined.
 
 1. Go to the BTP cockpit of your global trial account holding the three subaccounts.
 2. Navigate to **Service Assignments** (to be found under **Entitlements**).
-3. Select **Cloud Foundry Runtime** from the drop-down 'Service'. You will see that all 4 units are assigned to one subaccount. ![Default entitlement distribution](images/ex2_entitlements_010.png)
+3. Select **Cloud Foundry Runtime** from the drop-down 'Service'. You will see that all 4 units are assigned to one subaccount.
 4. Navigate to **Entity Assignments** and click on the selector icon under **Select Entities**.
-5. Select the subaccount holding the four Cloud Foundry entitlements (by default called *trial*) and choose **Select**.
+5. Select the subaccount holding the four Cloud Foundry entitlements and choose **Select**.
 6. Choose **Edit**.
 7. Scroll down to **Cloud Foundry Runtime** and use the minus (**-**) sign to reduce the number of Units to two (**2**) .
 8. Scroll up again and choose **Save**.
-9. After saving is completed use the **Select Entities** field again to deselect the **trial** subaccount and select the **Test** subaccount.
-10. Choose **Select**.
-11. Choose **Edit**.
-12. Choose **Add Service Plans**.
-13. Scroll down to **Cloud Foundry Runtime**, click on this entry, select the **MEMORY** checkbox and click on **Add 1 Service Plan**.
-14. Check that there is **1 Unit** of **Cloud Foundry Runtime MEMORY** assigned to the subaccount and choose **Save**.
-15. After saving is completed repeat these steps for your **Prod** subaccount.
-16. Navigate to **Service Assignments** (to be found under **Entitlements**).
-17. Select **Cloud Foundry Runtime** from the **Service** dropdown menu. Now the Cloud Foundry Runtime entitlements are distributed among your three subaccounts. ![Adapted entitlement distribution](images/ex2_entitlements_110.png)
+
+Now assign all remaining entitlements to the **Test** subaccount
+
+1. After saving is completed use the **Select Entities** field again to deselect the **trial** subaccount and select the **Test** subaccount.
+2. Choose **Select**.
+3. Choose **Edit**.
+4. Choose **Add Service Plans** and add the following entitlements:
+
+| Service                                      | Plan                   | Assignment |
+| :------------------------------------------- | :--------------------: | ---------: |
+| Cloud Foundry Runtime                        |  Memory                | 2          |
+| SAP HANA Cloud                               |  hana                  | 1          |
+| SAP HANA Cloud                               |  tools (Application)   | 1          |
+| SAP HANA Schemas & HDI Containers            |  hdi-shared            | 1          |
+| Auhtorization and Trust Management Service   |  application           | 1          |
+| SAP Build Work Zone, standard edition        |  standard (Application)| 100        |
+
+### Create Subscriptions and Instance in your Test Subaccount
+
+For the application to run after the transport, you need to provide a SAP Hana Cloud hana db instance, a SAP Build Workzone subscription (Needed to access the frontend of the app) and a SAP Hana Cloud tools subscription (Needed to configure the hana db).
+
+1. In your Test subaccount, go to **Instances and Subscriptions**.
+2. Click **Create** to open the **New Instance or Subscription** poppup.
+
+ ![Create instances and subscriptions](images/ex2_create_instance_sub.png)
+
+First create all required subscription.
+
+1. Choose a subscription for **SAP Build Workzone, standard edition** via the Service drop down field.
+2. Choose the **Plan** **standard** and **Create** the subscption
+3. In the next step, open the **New Instance or Subscription** popup again and choose **Service** **SAP HANA Cloud**.
+4. Choose the **Plan** **tools** and **Create** the subscption.
+
+As a last step create the **SAP HANA Cloud** hana instance. As SAP Hana Cloud Trial are limited to have only one hana instance per subaccount, please make sure every other instance in any other subaccount has been deleted.
+You can check your trial global account all **Service Assignments** of  **SAP HANA Cloud*, which gives you an indicator of which subaccounts need to be checked. 
+Check if in any metioned subaccount any active instance of hana exists and delete the instance.
+
+ ![Delete other hana instances](images/ex2_delete_hana_instance.png)
+
+5. Finally in your **Test** subaccount, open the **New Instance or Subscription** poppup again and choose **Service** **SAP HANA Cloud**:
+6. Choose within the **Plan** drop down the **hana** instance and fill all manadatory input fields, e.g.:
+
+ ![Create new hana instance](images/ex2_hanainstance.png)
+
+7. Go to parameters and proide a **systempassword**. The password must comply with the default SAP HANA password policy. It must have at least 8 characters and comprise at least one uppercase letter, at least one number, and at least one lowercase letter.
+
+ ![Provide hana instance parameters](images/ex2_hanainstance_param.png)
+
+8. **Create** the hana instance
+
+The creation of the Hana instance will take some minutes. Please continue with the next step.
 
 ## Exercise 2.1 - Enable SAP Cloud Transport Management for Use
 
@@ -226,7 +244,7 @@ You should now have a total of three destinations pointing to your three subacco
 13. Leave the **Deployment Strategy** set to **default**.
 14. Choose **OK**.
 
-Repeat these steps for the other two subaccounts (with some slight changes!):
+Repeat these steps for the test subaccount (with some slight changes!):
 
 15. Click on the plus (**+**) sign.
 6. Enter a **Name**, for example `TEST`.
@@ -238,18 +256,8 @@ Repeat these steps for the other two subaccounts (with some slight changes!):
 12. Set the **Destination** to point to your development subaccount (**TEST_MTA** if you followed our naming proposal).
 13. Leave the **Deployment Strategy** set to **default**.
 14. Choose **OK**.
-25. Click on the plus (**+**) sign.
-6. Enter a **Name**, for example `PROD`.
-7. Optionally enter a **Description**, for example `Production node`.
-8. Do **not** select the **Allow Upload to Node** checkbox.
-9. Leave the **Forward Mode** set to **Pre-Import**.
-10. Do **not** select the **Controlled By SAP Solution Manager**  & **Virtual Node** checkbox.
-11. From the **Content Type** dropdown menu, select **Multi-Target Application**.
-12. Set the **Destination** to point to your development subaccount (**PROD_MTA** if you followed our naming proposal).
-13. Leave the **Deployment Strategy** set to **default**.
-14. Choose **OK**.
 
-You should now have three transport nodes *DEV*, *TEST* and *PROD*.
+You should now two transport nodes *DEV* and *TEST*.
 
 #### Create Transport Routes
 
@@ -260,20 +268,45 @@ You should now have three transport nodes *DEV*, *TEST* and *PROD*.
 5. Choose a source node for the route. In our naming convention, this would be **DEV**.
 6. Choose a target node. In our naming convention, this would be **TEST**.
 7. Click on **OK**.
-8. Click on the '+' icon again.
-9. Enter a **Name**, for example `TEST_to_PROD`.
-4. Optionally enter a **Description**.
-5. Choose a source node for the route. In our naming convention, this would be **TEST**.
-6. Choose a target node. In our naming convention, this would be **PROD**.
-7. Click on **OK**.
 
-You should now see two tranport routes *DEV_to_TEST* and *TEST_to_PROD*.
+You should now see the tranport route *DEV_to_TEST* 
 
 ### Check the Visual Representation of the Transport Landscape
 
 1. In the navigation pane, click on **Landscape Visualization**.
-2. You should see a linear three node landscape:
+2. You should see a linear two node landscape.
 
-    ![Landscape Visualization](images/ex2_landscapevi_001.png)
+For this hands-on demonstration, you have set up a basic two-node landscape. Naturally, more complex scenarios are possible. To explore the full range of service capabilities, please refer to the cTMS End User Guide: [Cloud Transport Management](https://help.sap.com/docs/cloud-transport-management/sap-cloud-transport-management/configuring-landscape?locale=en-US)
+
+### Configure your Hana instance
+
+At this point your hana instance previously created in your **Test** subaccount should be up and running. For the Cloud Transport Management Service to deploy the app and initialize the db schemas and data, the hana instance must be configured properly. First add required hana permissions.
+
+1. In your **Test** subaccount in the SAP BTP cockpit, choose **Security** and **Users**.
+2. Choose the arrow **>** next to your user entry.
+
+   ![click_on_user](../ex1/images/click_on_user.png)
+
+3. In the **Role Collections** overview of your user entry, click on **Assign Role Collection** or, if the button is not visible, click the three dots (**...**) and choose **Assign Role Collection**.
+
+   ![assign_role](../ex1/images/assign_role.png)
+
+4. Check the boxes for **SAP Hana Cloud Administrator**, **SAP Hana Cloud Seurity Administrator** and **SAP Hana Cloud Viewer**, then click **Assign Role Collection**.
+
+5. Navigate to **Instances and Subscriptions** and click the **SAP Hana Cloud** instance to open **Hana Cloud Central**.
+
+![Access Hana configuration](images/ex2_hanaconfig.png)
+
+6. In **Hana Cloud Central** you should see running SAP Hana instance. Click **Manage Configuration**:
+
+![Manage Configuration](images/ex2_hanaconfig_change.png)
+
+7. In the Manage Configuratio view scroll down to **Allowed Connections** and set **Allow all IP adresses**. This setting will allow you to initialize the SAP HANA Cloud instance once deployment is started by Cloud Transport Mangement Service.
+
+![Change ip settings](images/ex2_hanacloudcentral_ip.png)
+
+8. **Apply your changes with a restart** and **save the changes**.
+
+![Confirm changes](images/ex2_hanacloudcentral_restart.png)
 
 Continue to - [Exercise 3 - Extend Your CI/CD Pipeline With Additional Stages](../ex3/README.md)
