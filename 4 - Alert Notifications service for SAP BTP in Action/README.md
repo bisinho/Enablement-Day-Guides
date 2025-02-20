@@ -152,7 +152,8 @@ You shall be redirected to Subscriptions page in Alert Notification service wher
 
 
 ### Email Confirmation 
-**IMPORTANT**: please check your inbox. You shall get an email in your inbox to confirm manually the email you had provided in the action `emailMe` you had created. Please read the email and click on the link provided to confirm your email otherwise you won’t receive notifications from Alert Notification service. 
+> [!NOTE]
+> Before proceeding further, please check your inbox. You shall get an email in your inbox to confirm manually the email you had provided in the action `emailMe` you had created. Please read the email and click on the link provided to confirm your email otherwise you won’t receive notifications from Alert Notification service. 
 ![](./images/ans-26.png)
 
 
