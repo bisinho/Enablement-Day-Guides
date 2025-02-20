@@ -29,15 +29,15 @@ By following the steps outlined above, you have implemented a comprehensive, end
 ## Table of Contents
 
 - [2. SAP Business Technology Platform Configuration](#2-sap-business-technology-platform-configuration)
-- [3. SAP Automation Pilot User Interface](#3-sap-automation-pilot-user-interface-🎨🖌️)
+- [3. SAP Automation Pilot User Interface](#SAP-Automation-Pilot-User-Interface)
 - [3.1. Command Creation Process](#31-command-creation-process)
 - [Create Input Keys](#create-input-keys)
 - [Create Executors](#create-executors)
 - [3.2. Inputs Page Overview](#32-inputs-page-overview)
-- [4. Configuration Before Testing the Command](#4-configurations-before-testing-the-command-⚙️)
+- [4. Configuration Before Testing the Command](#Configurations-Before-Testing-the-Command)
 - [4.1. SAP Automation Pilot Configuration](#41-sap-automation-pilot-configuration)
 - [4.2. SAP Alert Notification Service Configuration](#42-sap-alert-notification-service-configuration)
-- [5. Testing the Integration](#5-testing-the-integration-👩🏻‍🔬)
+- [5. Testing the Integration](#Testing-the-Integration)
 
 ---
 <br><br>
@@ -60,7 +60,7 @@ By following the steps outlined above, you have implemented a comprehensive, end
 
 ---
 <br><br>
-## 3. SAP Automation Pilot User Interface 🎨🖌️
+<h2 id="SAP-Automation-Pilot-User-Interface">3. SAP Automation Pilot User Interface 🎨🖌️</h2>
 
 ### Commands Page Overview
 Become familiar with the Commands page, where you manage and create new commands.
@@ -146,6 +146,7 @@ Head back to our command to configure its last part - to automatically use our n
 ---
 <br><br>
 ## 4. Configurations Before Testing the Command ⚙️
+<h2 id="Configurations-Before-Testing-the-Command">4. Configurations Before Testing the Command ⚙️</h2>
 The command can be triggered in many ways: manually, via schedule, but for the purposes of this demo we will use SAP Alert Notification Service events.
 
 ---
@@ -162,10 +163,9 @@ The command can be triggered in many ways: manually, via schedule, but for the p
 ### Create a Trigger Endpoint:
   - Create an SAP Automation Pilot trigger endpoint for external systems to call.
     - Select the command to create a trigger url for.
-
-    > [!NOTE]
-    > Some of the event fields (like *subAccount*, *resourceGroup*, *resourceName* and *resourceInstance*) can be auto-mapped, [reference here](https://help.sap.com/docs/automation-pilot/automation-pilot/reacting-to-events?locale=en-US&q=notification).
     - Then copy the endpoint URL and store it for later use.
+> [!NOTE]
+> Some of the event fields (like *subAccount*, *resourceGroup*, *resourceName* and *resourceInstance*) can be auto-mapped, [reference here](https://help.sap.com/docs/automation-pilot/automation-pilot/reacting-to-events?locale=en-US&q=notification).
 
 ---
 
@@ -179,7 +179,7 @@ The command can be triggered in many ways: manually, via schedule, but for the p
 
 ---
 <br><br>
-## 5. Testing the Integration 👩🏻‍🔬
+<h2 id="Testing-the-Integration">5. Testing the Integration 👩🏻‍🔬</h2>
 
 ### Open the Executions Page
 If the entire setup was prepared correctly, then only one thing will guarantee it - testing it with a real event! Head to the SAP Automation Pilot Executions page to await the start of the command in response to the crash event from the SAP Alert Notification Service.
