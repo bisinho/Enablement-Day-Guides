@@ -1,270 +1,196 @@
 # Exercise 4 - SAP Alert Notification service for SAP BTP in Action
 
+Within this use tutorial you will learn how to set up proactive alerting and incident management for SAP BTP applications using SAP Alert Notification service.
+
+
 **IMPORTANT:**
-In this exercise it is covered a particular use case: "Alert Notification service - Immediate alert for an app crash on CloudFoundry". 
+In this exercise it is covered a particular use case: "Alert Notification service - Immediate alert for an app crash on CloudF oundry". 
 However, please be informed there are also many more use cases related to Alert Notificaiton service - to find out more detauls, please consult the service documentation: [SAP Alert Notification Service Events](https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/sap-alert-notification-service-events)
 
-- [(Optional) Exercise 6 - Alert Notification service - Send a Notification Email based on a custom event](../ex6/README.md)
-- [(Optional) Exercise 7 -  Alert Notification service - Trigger an Ops Remedtiation Command (via SAP Automation Pilot)](../ex7/README.md)
 
-
-## Exploring the ANS Sample App 
+## Context
 
 > [!NOTE]
-> Before proceeding with configurations within SAP Alert Notification service it is important to understand how the ANS Sample App works as we will use it in this excercise to push events to Alert Notification service.
+> Before proceeding with configurations within SAP Alert Notification service it is important to understand the context behind it. 
 
-**Context**
-![](./images/ans-007-producer-api.png)
+![](./images/ans-01.png)
 
 The diagram above is explained as it follows: 
-- there is a cloud app already deployed and running on BTP CF in your subaccount;
-- this app is already instrumented with the Alert Notification service java library so that it is possible to be defined different custom events which can be triggered by the app automatically or manually. For this exercise purposes the events will be triggered manually;
-- once the events are triggered by the app, these will be ingested into the Alert Notification service Producer API so that further filtering and actions from the service can be performed. **NOTE**: creating filtering (conditions) and applying specific actions associated to the conditions are described in detail in the upcoming sections in this exercise.
-
-Following excercise 0 - you should be already loged into your SAP BTP sub-account. If not please make sure you follow these steps: 
-
-1. From the BTP Global Account `SAP-TechEd-2023` --> select the subaccount associated to your user.
-![](./images/ans-002.png)
-
-2. Once that's done - you should access your SAP BTP Subaccount
-![](./images/ans-003_1.png)
-
-3. To access the ANS sample app:
-Click on `Cloud Foundry` -> `Spaces` and then select the space that is already provisoned for your SAP BTP subaccount. 
-![](./images/ans-003_2.png)
-
-4. There is an app named `ans-sample-app-{your_user_id}` where your `{user_id}` is the one associated to your subaccount, e.g. `ad263-002` , `ad263-003`, `ad263-n+1` , etc. Click on the name of your app.
-![](./images/ans-009.png)
-
-5. You will be redirected to the Application Overview screen. Click on the `Application Routes` URL. 
-![](./images/ans-010.png)
-
-6. You will land to the ANS Sample App home screen where you will also see 3 buttons as per the screenshot below. Clicking on each of the buttons will push a unique custom event to the Alert Notification service Producer API. 
-![](./images/ans-012.png)
+- there is a cloud (CAP) app already deployed and running on BTP CF in your subaccount;
+- in case there is a crash of this app or other events of our interest, these events will be ingested into Alert Notfiication service;
+- in order to be able filter and act on the events ingested into the Alert Notification service it is needed to configure: `conditions` (needed to filter out the events which are important for you) , `actions` (specify  actions to be triggered by the Alert Notification service, e.g. send email, send IM notification, trigger HTTPS webhooks, trigger automation flow, etc), and set `subcription` (which is the entity that binds one or more conditions to one or more actions that have been already set). IMPORTANT: without an active `subcription` no action will be triigered by Alert Notification service.
 
-Please see below exact attributes for each of the 3 events pushed from the ANS Sample App to the Alert Notification service Producer API. 
+# Provisioning of SAP Alert Notification service
 
-**Push Info Notification**
-It pushes a custom event `.withType("TechEdDemoEvent")` and `.withSeverity(EventSeverity.INFO)`
-Event code is shared as well here: 
-```
-public static CustomerResourceEvent buildWarningEvent() {
-        return new CustomerResourceEventBuilder()
-                .withCategory(EventCategory.NOTIFICATION)
-                .withSeverity(EventSeverity.WARNING)
-                .withBody("This is the body of the event pushed by the ANS Sample Application")
-                .withSubject("ANS Tech Ed Demo event")
-                .withType("TechEdDemoEvent")
-                .withAffectedResource(
-                        new AffectedCustomerResourceBuilder()
-                                .withType("demo-application")
-                                .withName("ans-sample-app-ad263-001")
-                                .build()
-                ).build();
-```
+First, you will need to provision SAP Alert Notification service for SAP BTP in your SAP BTP subaccount.
 
-**Push Warning Notification**
-It pushes a custom event `.withType("TechEdDemoEvent")` and `.withSeverity(EventSeverity.WARNING)`
+Go to your subaccount and on the left sidebar click the menu item “Entitlements” and you will see the entitlements set. 
 
-Event code is shared as well here: 
-```
-public static CustomerResourceEvent buildWarningEvent() {
-        return new CustomerResourceEventBuilder()
-                .withCategory(EventCategory.NOTIFICATION)
-                .withSeverity(EventSeverity.WARNING)
-                .withBody("This is the body of the event pushed by the ANS Sample Application")
-                .withSubject("ANS Tech Ed Demo event")
-                .withType("TechEdDemoEvent")
-                .withAffectedResource(
-                        new AffectedCustomerResourceBuilder()
-                                .withType("demo-application")
-                                .withName("ans-sample-app-ad263-001")
-                                .build()
-                ).build();
-```
-
+![](./images/ans-02.png)
+ 
+## Provisioning of SAP Alert Notification service
 
-**Push Error Notification**
-It pushes a custom event `.withType("TechEdDemoEvent")` and `.withSeverity(EventSeverity.ERROR)`
+First, you will need to provision SAP Alert Notification service for SAP BTP in your SAP BTP subaccount.
 
-Event code is shared as well here: 
-```
-public static CustomerResourceEvent buildErrorEvent() {
-        return new CustomerResourceEventBuilder()
-                .withCategory(EventCategory.NOTIFICATION)
-                .withSeverity(EventSeverity.ERROR)
-                .withBody("This is the body of the event pushed by the ANS Sample Application")
-                .withSubject("ANS Tech Ed Demo event")
-                .withType("TechEdDemoEvent")
-                .withAffectedResource(
-                        new AffectedCustomerResourceBuilder()
-                                .withType("demo-application")
-                                .withName("ans-sample-app-ad263-001")
-                                .build()
-                ).build();
-```
+Go to your subaccount and on the left sidebar click the menu item “Entitlements” and you will see the entitlements set. 
 
-> [!NOTE]
-> As you see: main difference between these 3 events is the severity. That will be useful to determine specific actions based on events' severity once these get pushed into the Alert Notification service. 
+![](./images/ans-02.png)
 
-8. Now, let's play with the app and see what the result it will be. Click on any of the available buttons (e.g. `Push Info Notification`, etc.) and you should see this this confirmation message. 
-![](./images/ans-013.png)
 
-The result is that the custom event was pushed successfully to ANS API. In order to get alerts and / or automated actions triggered by the Alert Notification service based on the event ingested we need to configure the Alert Notification service itself. That is explained in details in the next section. 
+Click on “Add Service Plans” button . 
 
+Find Alert Notification service and check the “standard” within the available plans section and click “Add 1 Service Plan” to save the configuration. 
+![](./images/ans-03.png)
 
-## Access SAP Alert Notification service 
+Click on “Save” button to save the configuration you made. 
+![](./images/ans-04.png)
 
-To access SAP Alert Notification service, since you are already logged into the SAP BTP Cockpit, please follow these steps: 
 
-1. From the left sidebar menu click on `Instances and Subscriptions` memu item to access the BTP services and applications already provisioned for your subacount
-![](./images/ans-004.png)
+As an expected result you shall be able to see the Alert Notification service with plan “standard” added into your entitlements. 
+![](./images/ans-05.png)
 
-2. Scroll down to the section `Instances` where you will find all BTP services provisioned in your subaccount. Click on the `ans` instance to access the SAP Alert Notification service.
-![](./images/ans-005.png)
 
-3. You will land to your SAP Alert Notification service . 
-![](./images/ans-006.png)
 
-In the next section you will understand how to confiure the Alert Notification service so that once an event it is pushed by the cloud applicaiton to be filtered out by the Alert Notificaiton service and a respective action to be triggered as well. 
+Let’s proceed with the service provisioning. 
 
+At subaccount level, click on “Instances and Subscriptions” main menu item, followed by the button “Create”
+![](./images/ans-06.png)
 
-## Configuring SAP Alert Notification service 
-Now it is time to configure the  Alert Notification service itself and see it in actions. To do so - please follow the next sections. 
 
+A multi-step wizard is to be displayed needed to be completed to provision Alert Notification service. 
+Fill in the needed fields with the basic info screen and click on “Next” button: 
+![](./images/ans-07.png)
 
-> [!NOTE]
-> In order to be able filter and act on the events ingested into the Alert Notification service it is needed to configure: `conditions` (needed to filter out the events which are important for you) , `actions` (specify  actions to be triggered by the Alert Notification service, e.g. send email, send IM notification, trigger HTTPS webhooks, trigger automation flow, etc), and set `subcription` (which is the entity that binds one or more conditions to one or more actions that have been already set). IMPORTANT: without an active `subcription` no action will be triigered by Alert Notification service.
 
----
 
-### Use Case: Alert Notification service - Create a Ticket in a Ticket System based on a custom event
 
-#### Solution Diagram: Overview 
-![](./images/ans-014.png)
+You will see “Parameters” section from the wizard, as some services support the provisioning of additional configuration parameters during instance creation. These parameters are passed in a valid JSON object that contains service-specific configuration parameters, provided either in-line or in a file.
 
-#### Solution Diagram: Explained
-In this use case there will be a custom event (`Warning Notification` - already explained in previous sections) pushed by the ANS Sample App to the Alert Notification service. Based on an active `Subcription` (which cosists of `Conditions` and `Actions`) in Alert Notification service, the event will be filtered out and an action (create a ticket in a ticketing system)  will be automatically triggered  by the Alert Notification service. Please follow the section below. 
+As per the Alert Notificaiton service documentation - Cloud Foundry Audit Events  Application Events , in order to receive Cloud Foundry application events, you need to update the relevant SAP Alert Notification service instance with parameter `enableCloudControllerAuditEvents` set to true.
 
-#### Alert Notification service - Configuration
+Therefore the following parameters shall be prvoided. 
 
-**Access the Alert Notification service** overview page (see _Access SAP Alert Notification service _)
+{ "enableCloudControllerAuditEvents": true }
 
-1. **Create Conditions**
+Add this parameter and click “Next” 
+![](./images/ans-08.png)
 
-1.1. Create a Condition with "Severity" set to `WARNING`
+Review the configuration and click the “Create” button to kick-off the provisioning of the service itself. 
+![](./images/ans-09.png)
 
-1.1.1.From the left-sidebar menu: select `Conditions` menu item, followed by the button `Create`
-![](./images/ans-015.png)
+You will see the service creation is in process: 
+![](./images/ans-10.png)
 
-1.1.2. Fill in the  details to create the needed condition. In this use case it we need to create a condition so that we can filter out the events based on a particular `severity`. 
-* Name:  `severityWarning`
-* Description: `EventSeverity set to WARNING`
-* Label: `severity`
-* Condition: use the drop downs so that you can setup the condition correctly = `severity` ->  `Is Equal To` -> `WARNING`
-* Click on `Create` button to save the configuration
-![](./images/ans-037.png)
-* You will see a confirmation screen. Then click on the `Close` button. 
 
-1.2. Create a Condition with "Event Type" set to `TechEdDemoEvent`
-> [!NOTE]
-> Since there might be events from different sources with severity set to `INFO` it is a good practice to filter out the events also on other parameters. In this use case, we will use also the "Event type" which for all events pushed by the ANS Sample app is set to `TechEdDemoEvent`. Therefore now we build a combination of two conditions `severity` **AND** `eventType` to make a unique filtering for the events.
+After a successful completion of the service provisioning you shall be able to see the service “Alert Notification” with a status “Created” as depicted in the screenshot below: 
+![](./images/ans-11.png)
 
-1.2.1.From the left-sidebar menu: select `Conditions` menu item, followed by the button `Create`
-![](./images/ans-015.png)
+To access the Alert Notification service just click on the hyperlink within the service instance: 
+![](./images/ans-12.png)
 
-1.2.2. Fill in the  details to create the needed condition. In this use case it we need to create a condition so that we can filter out the events based on a particular `eventType`. 
-* Name:  `eventType_TechEdApp`
-* Description: `eventType set to TechEdDemoEvent`
-* Label: `eventType`
-* Condition: use the drop downs so that you can setup the condition correctly = `eventType` ->  `Is Equal To` -> `TechEdDemoEvent`
-* Click on `Create` button to save the configuration
-![](./images/ans-018.png)
-* You will see a confirmation screen. Then click on the `Close` button. 
-![](./images/ans-019.png)
+You shall be redirected to the Alert Notification service UI as per the screenshot below: 
+![](./images/ans-13.png)
 
 
+## Configuring Alert Notification service
 
-2. **Create Actions**
+To consume events for our CAP applications in case of disruption or other potential incidents, there is needed to have an active subscription configured in Alert Notification service. 
 
-As a next step you need to create an action - as per the specific use case - it is needed to create an action for creating a ticket in a Ticketing system. To do so follow the steps defined below. 
+To create the subscription, follow these steps: 
+Click on the “Subscriptions“ menu item and then “Create” button. 
+![](./images/ans-14.png)
 
-2.1. From the left-sidebar menu: select `Actions` menu item, followed by the button `Create`
-![](./images/ans-021.png)
+A multistep wizard named “Create Subscription” is to be displayed. Fill in the fields, as a reference check the screenshot attached underneath: 
+![](./images/ans-15.png)
 
-2.2. There is "Create Action" wizzard displayed , please follow these steps:
 
-2.2.1. Select `Webhook`  and click `Next`
-![](./images/ans-038.png)
+Make sure the state is set to “On” and click “Create” button which will lead to the “Select Conditions”. Since there are not any conditions, click on “Create Condition”
+![](./images/ans-16.png)
 
-2.2.2. Fill in the  details to create the needed action: 
-* Name: `creteTicket`
-* Description: `create a ticket in a Ticketing system`
-* Labels: `ticketingSystem`
-* URL address:  `{teched-incident-demo-ui-url}/api/v1/tech-ed/createTicket` - this is the endpoint to the Ticketing system we will use to create a ticket automatically.
-**NOTE:** to find out the correct URL for `{teched-incident-demo-ui-url}` go back to your SAP BTP subaccount, navigate to `Cloud Foundry` -> `Spaces` -> `AD263-XXX` -> `Applications` -> `teched-incident-demo-uivalue` and then copy the URL mentioned in Application Routes (see the screenshot below).  
-![](./images/ans-038_1.png)
+That will open the section so that you can create your first condition in Alert Notification service. Fill in the fields as suggested below. Note: it is important to make sure that for the condition in question there is assigned a property that you want matched, including a predicate and expected value. Therefore, within the current example we want to be able to detect events about crashed events and therefore the condition is configured as: 
 
-Copy the URL mentioned in Application Routes to notepad and also DO NOT FORGET on top of this url to add the exact api endpoint: `/api/v1/tech-ed/createTicket`.
+`eventType` `Contains` `app.crash`
 
-   
-* Payload Template:
-```
-{
-    "subject": "Ticket created by ANS related to resource: {resource.resourceName} and event time stamp: {eventTimestamp}",
-    "priority": 2
-}
-```
-> [!NOTE]
-> As you see when you add your payload it is possible to model it in a way to incporate dynamic value/s into it , more details about it can be found at [Alert Notification service - Help documentation --> Webhook Actions](https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/webhook-action-types?q=payload)
+Hint: to identify unique parameters which you could use to setup the needed conditions in Alert Notification service, you can consult the various events consumed in Alert Notification service. If we take the example of a CF crashed app, you can check out the parameters available in this event: Application Crash: https://help.sap.com/docs/alert-notification/sap-alert-notification-for-sap-btp/application-crash 
+See some examples of the event properties below: 
+![](./images/ans-17.png)
 
-* Click on `Create` button
-![](./images/ans-039_1.png)
 
-2.2.3. You will see an confirmation screen that the action has been created. 
+Once it is all set click on the “Create” button to create the condition. 
+![](./images/ans-18.png)
 
-Now the action `creteTicket` is created and you should see this action within the "Actions" section. 
-![](./images/ans-040_1.png)
+You can find out that the condition is already associated to the subscription. 
+Then click on “Save and Next” to proceed further. 
+![](./images/ans-19.png)
 
 
-3. **Create Subscription**
-As a next step you need to create the subscription.
+As a next step you will need to create an action that is going to be associated to your active subscription. Note: this action is going to be triggered in case the condition you just have created has been matched. 
 
-3.1. From the left-sidebar menu: select `Subscriptions` menu item, followed by the button `Create`
-![](./images/ans-029.png)
+To create the action, click on the option “Create Action”:
+![](./images/ans-20.png)
 
-3.2. There is "Create Subscription" wizzard displayed , please follow these steps:
-3.2.1. Create Subsription: fill in the form with the needed details 
-* Name: `sampleApp_WarningEvent`
-* Description: `a subscription to be fired for a custom event with severity WARNING`
-* Labels: `sampleApp`
-* State: `On` (this is the default state)
-* Click on the `Create` button
-![](./images/ans-041.png)
+A list of possible actions is to be displayed. For this use case we’ll go with an email action. Select the “Email” and click at the “Next” button. 
+![](./images/ans-21.png)
 
-3.2.2. Select Conditions: select the conditions you have created and click on the `Assign` button
-![](./images/ans-042_1.png)
 
-3.2.3. Select Actions: select the action you have created and click on the `Assign` button
-![](./images/ans-043.png)
+Fill in the fields requested and provide the email to which an alert is going to be sent out. Once you are done with it, click on the “Create” button: 
+![](./images/ans-22.png)
 
-3.2.4. Confirmation screen: you will see a confirmation screen. Click on `Close` button. 
-![](./images/ans-044_1.png)
+You shall be redirected to the Select Actions where the action that has been just created is associated to the subscription. Please click “Save” to proceed further: 
+![](./images/ans-23.png)
 
-Now you will see the active subscription you just have configured.
-![](./images/ans-045_1.png)
+Congratulations, your first subscription in Alert Notification service has been created: 
+![](./images/ans-24.png)
 
 
-#### Simulation and Outputs 
+You shall be redirected to Subscriptions page in Alert Notification service where you can find your subscription available. 
+![](./images/ans-25.png)
+
+
+### Email Confirmation 
+Important: please check your inbox. You shall get an email in your inbox to confirm manually the email you had provided in the action `emailMe` you had created. Please read the email and click on the link provided to confirm your email otherwise you won’t receive notifications from Alert Notification service. 
+![](./images/ans-26.png)
+
+
+Once you have clicked on `this link` you will be redirected to a confirmation page in your browser. Click on `Confirm` button: 
+![](./images/ans-27.png
+
+Then you will see a confirmation page in your browser: 
+![](./images/ans-28.png)
+
+Now you are all set, and you could receive instant notification from Alert Notification service delivered directly in your email inbox. 
+
+
+## Simulating a crash your CAP application and receiving an instant alert 
+
+Since we have created already a subscription in Alert Notification service to detect potential crashes in our CAP app and notify us immediately over an email, let’s now simulate such situation. The exact simulation would be to cause a situation where the app runs out of memory and crashes. 
+
+To do so, please access your service CAP application ` sflight-srv` running in your Cloud Foundry dev space by just clicking on it: 
+![](./images/ans-29.png)
+
+
+At the Application Overview page, click on the “Change Instance Details”: 
+![](./images/ans-30.png)
+
+Then change the instance details by setting up the `Memory per Instance (MB)’ to 5 , checked the consent  “I understand that changing the instance memory or instance disk of "sflight-srv" will cause the application to restart” and click “Save” to save the configuration. 
+
+The newly applied configuration would case a crash of your CAP app with an error: `exited with status 137 (out of memory), reason: CRASHED`
+![](./images/ans-31.png)
+
+
+As an expected result out of this exercise you should get an instant email in your email inbox with details about the event and the CAP app itself: 
+![](./images/ans-32.png)
+
+
+Now you can consider that the instant alerting for your CAP app is in place, and you will be always notified in case of app crashes. 
+![image](https://github.com/user-attachments/assets/016ef658-0cff-4a54-a205-9daf7c70666b)
+
+
+
+## Simulation and Outputs 
 
 Now it is time to simulate the use case and inspect the outputs. To do so , please follow these steps: 
 
-1. Access the ANS Sample App (as already described).
-2. Click on the `Push Warning Notification`
-3. The custom event will be pushed into the Alert Notification sevice Producer API, then Alert Notification service will filter out the event based on the conditions set for the active subcription and it will also trigger the action associated to this very subscription.
-4. Access the UI of the ticketing system that has been already deployed in your BTP CF Space  - `{teched-incident-demo-ui-url}`
-5. You should see an incident created automatically by the Alert Notification service (see an example as per the screenshot below). 
-![](./images/ans-046.png)
 
 ---
 
@@ -272,6 +198,5 @@ Now it is time to simulate the use case and inspect the outputs. To do so , plea
 
 You've now managed to see Alert Notification service in action. With its flexible events' filtering combined with a rich catalog of actions that can be triggered automatically, the Alert Notification service is a solid product, valuable for each (Dev)Ops team that can be used in a wide variaty in use cases.
 
-Continue to - [Exercise 5 - SAP Automaiton Pilot](../ex2/README.md)
 
 
