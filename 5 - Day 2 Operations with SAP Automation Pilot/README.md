@@ -23,3 +23,176 @@ To implement the desired solution, complete the following steps (use the links t
 
 ### Result
 By following the steps outlined above, you have implemented a comprehensive, end-to-end solution for automated incident response in your cloud application on SAP BTP. This solution not only detects and alerts you about issues but also automatically triggers recommended actions for troubleshooting and incident management. By structuring and automating the incident response process without the need for human intervention, you ensure faster problem resolution, more efficient project delivery, and higher client satisfaction.
+
+---
+
+## Table of Contents
+
+- [2. SAP Business Technology Platform Configuration](#2-sap-business-technology-platform-configuration)
+- [3. SAP Automation Pilot User Interface](#3-sap-automation-pilot-user-interface-🎨🖌️)
+- [3.1. Command Creation Process](#31-command-creation-process)
+- [Create Input Keys](#create-input-keys)
+- [Create Executors](#create-executors)
+- [3.2. Inputs Page Overview](#32-inputs-page-overview)
+- [4. Configuration Before Testing the Command](#4-configurations-before-testing-the-command-⚙️)
+- [4.1. SAP Automation Pilot Configuration](#41-sap-automation-pilot-configuration)
+- [4.2. SAP Alert Notification Service Configuration](#42-sap-alert-notification-service-configuration)
+- [5. Testing the Integration](#5-testing-the-integration-👩🏻‍🔬)
+
+---
+<br><br>
+## 2. SAP Business Technology Platform Configuration
+
+### Booster Showcase
+  - The booster helps you get started in a faster manner by ensuring the subscription and the role assignment to your user for SAP Automation Pilot is done automatically.
+
+#### Ensure you have entitlements to create a subscription and assign yourself the necessary role and permissions
+
+#### Region Availability
+  - The regions where SAP Automation Pilot are available are shown in the [documentation here](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US&q=dynamic+expressions).
+  > [!IMPORTANT]
+  > A subAccount for AP21 must be created for trial accounts.
+
+#### Prerequisites for access!
+  - Verify that your user has the necessary access in the subAccount, Cloud Foundry organization, and Cloud Foundry space with the appropriate roles.
+  > [!WARNING]
+  > The demo does NOT support MFA enabled users! It can be extended to support it, but that is not the focus of it.
+
+---
+<br><br>
+## 3. SAP Automation Pilot User Interface 🎨🖌️
+
+### Commands Page Overview
+Become familiar with the Commands page, where you manage and create new commands.
+
+### 3.1. Command Creation Process
+Create a robust command with input and output keys to define the command contract and executors for the different steps you want to perform.
+- The scenario assumes that your command is named **ResizeAppWhenCrash** and resides in a catalog named **EDay**.
+
+- **Command Contract**: Defines the input and output keys, which is the input data for the command and the output data from the command respectively.
+  - Input key names are used to pass data around in the command;
+- **Command Executors**: Configure steps and their specific settings, which form the execution logic of what you want the command to accomplish.
+  - Executor steps have a field **alias**, which is the particular name for that specific step in your command. It has to be unique for your command, because it is used to access the output from that particular step.
+  - Configurations and data manipulation can be achieved by using the custom jq expression language that SAP Automation Pilot supports. (It deserves a [documentation link](https://help.sap.com/docs/automation-pilot/automation-pilot/dynamic-expression?locale=en-US&q=dynamic%20expressions) on its own, as it will be your helpful reference.).
+
+#### Create Input Keys
+
+- **Input Key Names and Types**: Input key names and their type are CRUCIAL to match exactly, because automatic mapping of expressions and values from events depend on them.
+- **Exports/Imports Showcase**: This is one way you can store the content you create in external version control systems for backup purposes.
+
+<br><br>
+> [!TIP]
+> Checkpoint: [Command contract](assets/checkpoint_1-commandContract.json)
+<br><br>
+
+#### Create Executors
+  - Add **GetCfAppState** step to check the state of our application with alias *getAppState*;
+    - Make sure *Auto-map parameters* toggle is on when adding the executors;
+  - Add **GetCfAppEvents** step to identify if Out-Of-Memory errors cause the issue with alias *getAppEvents*;
+    - Add a conditional execution on whether any instance of our application is in CRASHED state:
+    > `$(.getAppState.output.resourceInstances | filter(.state == \"CRASHED\") | length > 0)`
+    
+    <br>
+    
+    <img src="images/getAppStateSampleData.png" width="500" height="400">
+    
+    <br>
+  - Add **SetCfAppResources** step to resize the application's memory allocation with alias *setAppResources*;
+    - Add a conditional execution on whether the previous step contains the OOM error: `Exited with status 137 (out of memory)`
+    > `$(.getAppEvents.output.eventsData | toObject.resources | map(.data.exit_description))`
+    - Calculate the memory to use based on the previous value from the *getAppState* step with 1MB added:
+    > `$(.getAppState.output.memory + 1024)`
+
+    <br>
+    
+    <img src="images/getAppEventsSampleData.png" width="500" height="400">
+    
+    <br>
+  - Add **RestartCfApp** step to restart the application in order for the changes to take effect with alias *restartApp*;
+    - Add a conditional execution on whether the app state is STOPPED or the resizing was executed:
+    > `$(.setAppResources.executed)`
+
+<br><br>
+> [!TIP]
+> Checkpoint: [Working command](assets/checkpoint_2-workingCommand.json)
+<br><br>
+
+### 3.2. Inputs Page Overview
+
+#### Create the Input
+Inputs are used to store static data instead of repeatedly typing it every time we want to trigger a command. In this example your user email and password are such static data.
+
+#### Add Default Values
+- Add a key named **user** of type *string* and enter your user's email you use for access to the Business Technology Platform.
+- Add a key named **password** of type *string*, mark it as **sensitive** and enter your user's password. 
+> [!NOTE]
+> MFA must NOT be enabled for this demo to work! Otherwise the OTP code must be appended to your password.
+
+<br><br>
+> [!TIP]
+> Checkpoint: [Input with <PLACE_HOLDERS>](assets/checkpoint_3-inputResource.json)
+<br><br>
+
+#### Command configuration final touches 🤌🏻
+Head back to our command to configure its last part - to automatically use our newly created input for default values.
+
+- Click on Edit for the input keys and configure the default values for the keys *user* and *password*
+
+<br><br>
+> [!TIP]
+> Checkpoint: [Working command with input key references](assets/checkpoint_4-workingCommandWithReference.json)
+<br><br>
+
+---
+<br><br>
+## 4. Configurations Before Testing the Command ⚙️
+The command can be triggered in many ways: manually, via schedule, but for the purposes of this demo we will use SAP Alert Notification Service events.
+
+---
+<br><br>
+### 4.1. SAP Automation Pilot Configuration
+
+### SAP Automation Pilot Service Account Creation
+  - Create a service account in SAP Automation Pilot in order to give access for external systems.
+    - Use the ROBOT suffix;
+    - Select Basic authentication;
+    - Add "Execute" permissions;
+    - Click on create and store credentials securely for later use.
+
+### Create a Trigger Endpoint:
+  - Create an SAP Automation Pilot trigger endpoint for external systems to call.
+    - Select the command to create a trigger url for.
+    > [!NOTE]
+    > Some of the event fields (like *subAccount*, *resourceGroup*, *resourceName* and *resourceInstance*) can be auto-mapped, [reference here](https://help.sap.com/docs/automation-pilot/automation-pilot/reacting-to-events?locale=en-US&q=notification).
+    - Then copy the endpoint URL and store it for later use.
+
+---
+<br><br>
+### 4.2. SAP Alert Notification Service Configuration
+
+- **Configuration of SAP Alert Notification Service in Business Technology Platform**:
+  - Reuse the "Condition" for the event crash from the previous demo.
+  <br>
+  - Create an "Action" of type SAP Automation Pilot to indicate we want to trigger our command.
+    - Use the service account credentials and trigger URL from before to configure it.
+  <br>
+  - Reuse the "Subscription" from the previous demo to include our newly created "Action".
+  <br>
+
+---
+<br><br>
+## 5. Testing the Integration 👩🏻‍🔬
+
+### Open the Executions Page
+If the entire setup was prepared correctly, then only one thing will guarantee it - testing it with a real event! Head to the SAP Automation Pilot Executions page to await the start of the command in response to the crash event from the SAP Alert Notification Service.
+
+- **Crash the Application**: Test the event integration by simulating an application crash.
+  - SAP Alert Notification Service will trigger an event, activating your SAP Automation Pilot command.
+- **Verify Successful Execution**: Ensure the command execution completes successfully.
+- **Verify in Business Technology Platform**: Confirm the application has been resized and gets restarted.
+> [!IMPORTANT]
+> An integration between SAP Automation Pilot and SAP Alert Notification Service in the other direction is also possible, but it is not showcased in the demo. Link to [documentation for further information here](https://help.sap.com/docs/automation-pilot/automation-pilot/integrate-with-sap-alert-notification-service-for-sap-btp?locale=en-US&q=notification).
+
+---
+<br><br>
+This concludes the Enablement Day session for SAP Automation Pilot. Make sure to check out additional resources and support options provided. Thank you for participating! Awesome work 😎

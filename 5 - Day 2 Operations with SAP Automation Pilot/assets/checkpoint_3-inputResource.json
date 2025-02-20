@@ -1,0 +1,25 @@
+{
+    "id": "EDay-<<<TENANT_ID>>>:UserInfo:1",
+    "name": "UserInfo",
+    "description": "User and password for Cloud Foundry access",
+    "catalog": "EDay-<<<TENANT_ID>>>",
+    "owner": null,
+    "version": 1,
+    "keys": {
+      "password": {
+        "type": "string",
+        "sensitive": true,
+        "description": null
+      },
+      "user": {
+        "type": "string",
+        "sensitive": false,
+        "description": null
+      }
+    },
+    "values": {
+      "password": "<REPLACE_ME_AFTER_IMPORT>",
+      "user": "<REPLACE_ME>"
+    },
+    "tags": {}
+  }
