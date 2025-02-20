@@ -166,7 +166,7 @@ Then you will see a confirmation page in your browser:
 Now you are all set, and you could receive instant notification from Alert Notification service delivered directly in your email inbox. 
 
 
-## Simulating a crash your CAP application and receiving an instant alert 
+## Simulating a crash of your CAP application and receiving an instant alert 
 
 Since we have created already a subscription in Alert Notification service to detect potential crashes in our CAP app and notify us immediately over an email, let’s now simulate such situation. The exact simulation would be to cause a situation where the app runs out of memory and crashes. 
 
