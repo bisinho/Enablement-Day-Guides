@@ -121,7 +121,7 @@ The process of provisioning HANA Cloud will take a while. To save time for our t
 
 At this point your hana instance previously created in your **Trial** subaccount should be up and running. For the MTA Deployment Service to deploy the app and initialize the db schemas and data, the hana instance must be configured properly. First add required hana permissions.
 
-In your **Test** subaccount in the SAP BTP cockpit, choose **Security** and **Users**.
+In your **Trial** subaccount in the SAP BTP cockpit, choose **Security** and **Users**.
 
 Choose the arrow **>** next to your user entry.
 ![](./images/build-19.png)
