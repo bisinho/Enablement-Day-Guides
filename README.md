@@ -56,6 +56,7 @@ Welcome to our **on-site hands-on enablement session** on **DevOps with SAP Busi
 
 ## **Prerequisites**
 To get the most out of this hands-on session, please ensure:
+
 ✅ You have an **SAP BTP account** with access to **SAP Business Application Studio**.  
 ✅ You are familiar with **basic cloud development concepts** and **Git**.  
 ✅ You have installed the necessary **development tools** as shared in our pre-event checklist.
