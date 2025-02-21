@@ -1,4 +1,4 @@
-# Exercise 4 - SAP Alert Notification service for SAP BTP in Action
+# SAP Alert Notification service for SAP BTP in Action
 
 Within this use tutorial you will learn how to set up proactive alerting and incident management for SAP BTP applications using SAP Alert Notification service.
 
