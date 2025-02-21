@@ -45,6 +45,7 @@ You will see the welcome message to SAP Business Application Studio. Now it’s 
 
 
 Let’s name our dev space: `playground` and specify that we would like to build “Full Stack Cloud Application” and click on “Create Dev Space”
+
 ![](./images/bas-06.png)
 
 
