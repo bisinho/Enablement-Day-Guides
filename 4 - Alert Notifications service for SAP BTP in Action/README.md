@@ -19,14 +19,6 @@ The diagram above is explained as it follows:
 - there is a cloud (CAP) app already deployed and running on BTP CF in your subaccount;
 - in case there is a crash of this app or other events of our interest, these events will be ingested into Alert Notfiication service;
 - in order to be able filter and act on the events ingested into the Alert Notification service it is needed to configure: `conditions` (needed to filter out the events which are important for you) , `actions` (specify  actions to be triggered by the Alert Notification service, e.g. send email, send IM notification, trigger HTTPS webhooks, trigger automation flow, etc), and set `subcription` (which is the entity that binds one or more conditions to one or more actions that have been already set). IMPORTANT: without an active `subcription` no action will be triigered by Alert Notification service.
-
-# Provisioning of SAP Alert Notification service
-
-First, you will need to provision SAP Alert Notification service for SAP BTP in your SAP BTP subaccount.
-
-Go to your subaccount and on the left sidebar click the menu item “Entitlements” and you will see the entitlements set. 
-
-![](./images/ans-02.png)
  
 ## Provisioning of SAP Alert Notification service
 
