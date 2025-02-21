@@ -184,7 +184,7 @@ Choose the arrow **>** next to your user entry.
 
 In the **Role Collections** overview of your user entry, click on **Assign Role Collection** or, if the button is not visible, click the three dots (**...**) and choose **Assign Role Collection**.
 
-![](./images/build-29.png)
+<img src="./images/build-29.png" width="400" height="400">
 
 
 Check all the boxes and save the configuration. 
