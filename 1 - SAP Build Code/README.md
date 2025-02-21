@@ -187,9 +187,8 @@ In the **Role Collections** overview of your user entry, click on **Assign Role 
 
 
 Check all the boxes and save the configuration. 
-Now you are all set to proceed with the next steps , please see “Developing your CAP app using SAP Business Application Studio”
 
- 
-![image](https://github.com/user-attachments/assets/82f1259b-3e47-4f20-aae9-aa4eec353439)
+## Summary
+Now you are all set to proceed with the next steps , please see “Developing your CAP app using SAP Business Application Studio”
 
 
