@@ -4,6 +4,7 @@
 
 Welcome to our **on-site hands-on enablement session** on **DevOps with SAP Business Technology Platform (SAP BTP)**! This event is designed for **SAP partners, customers, and developers** who want to streamline their cloud application development and operations using **SAP BTP DevOps tools and best practices**.
 
+![](./enablement-01.png)
 ---
 
 ## **Hands-on sessions covered in this repo**
