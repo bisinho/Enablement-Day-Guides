@@ -61,7 +61,8 @@ Congratulations – you had landed to your first subaccount in SAP BTP.
 
 
 ## Create a CF Space 
-As a next step you will need to create a space on your CF Environment. To do so, at the subaccount overview page, just click on “Create Space” button: 
+Take a look in your subaccount. In case there is no space created, please proceed with this step. 
+You will need to create a space on your CF Environment. To do so, at the subaccount overview page, just click on “Create Space” button: 
 
 ![](./images/build-10.png)
 
