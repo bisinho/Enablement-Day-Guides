@@ -65,7 +65,8 @@ As a next step you will need to create a space on your CF Environment. To do so,
 ![](./images/build-10.png)
 
 
-Type `dev` as a space name and click “Create” 
+Type `dev` as a space name and click “Create” :
+
 ![](./images/build-11.png)
 
 ## HANA Cloud dependencies for your CAP app 
