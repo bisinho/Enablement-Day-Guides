@@ -186,10 +186,8 @@ Well done - you will see the UI and the data served by the HANA Cloud in your br
 ## Summary: 
 This tutorial is part of the **SAP BTP Hands-On Enablement Day (21.02.2025)** and provides a guided introduction to **SAP Business Application Studio (BAS)**. It covers the key features and benefits of BAS, explaining how it accelerates application development by leveraging **SAP Business Technology Platform (BTP)** services.
 
-### What You'll Learn:
+### What have learned:
 - **Set up SAP Business Application Studio**
 - **Initialize a new project from Git**
 - **Test the project locally**
 - **Deploy the application to a development environment on SAP BTP Cloud Foundry**
-
-This hands-on session is designed for **SAP partners and customers** who want to streamline their cloud application development workflow using **SAP's cloud-native tools**.
