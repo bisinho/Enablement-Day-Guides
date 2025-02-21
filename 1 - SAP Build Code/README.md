@@ -190,6 +190,7 @@ In the **Role Collections** overview of your user entry, click on **Assign Role 
 Check all the boxes and save the configuration. 
 
 ## Summary
-Now you are all set to proceed with the next steps , please see “Cloud App Development with SAP Business Application Studio”
+Now you are all set to proceed with the next steps , please see [Cloud App Development with SAP Business Application Studio](./2%20-%20Cloud%20App%20Development%20with%20SAP%20Business%20Application%20Studio/README.md)
+
 
 
