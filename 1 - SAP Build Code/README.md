@@ -8,6 +8,7 @@ This repository contains the material for the SLB: SAP BTP  Hands-On Enablement 
 
 Introduction to SAP Build Code and how it accelerates app development with the incorporated sevices from SAP Business Technology Platform (BTP). Highlights on on key features and benefits for SAP partners and customers.
 Wihin the current tutorial we will setup your SAP BTP subaccount and SAP Build Code with all the needed entitlements and permissions so that you can proceed with the actual CAP development.
+![](./images/build-01.png)
 
 ## Prerequisites
 
