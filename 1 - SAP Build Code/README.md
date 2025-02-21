@@ -106,10 +106,12 @@ Within the parameters section, please add input for “systempassword” and cli
 
 
 Review the inputs provided and click on “Create” 
+
 ![](./images/build-17.png)
 
 
 The process of provisioning HANA Cloud will take a while. To save time for our tutorial, you could proceed with another step and come back to HANA 
+
 ![](./images/build-18.png)
 
 
