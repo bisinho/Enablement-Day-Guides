@@ -20,7 +20,7 @@ To complete the exercices in this repository, please make sure that you meet the
 
 Create your first subaccount in “US East (VA) – AWS” region and click on “Create Account” button. 
 
-![](./images/build-02.png)
+<img src="./images/build-02.png" width="500" height="400">
 
 
 
